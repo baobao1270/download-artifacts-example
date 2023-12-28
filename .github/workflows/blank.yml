@@ -11,17 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: run ${{ github.run_id }}
-        run: |
+      - run: |
           mkdir dist
-          uuidgen > dist/v1
-          uuidgen > dist/v2
+          uuidgen > dist/$(uuidgen)
       - uses: actions/upload-artifact@v4
         id: artifact-upload
         with:
           name: dist
           path: dist
-      - name: Output artifact ID ${{ steps.artifact-upload.outputs.artifact-id }}
-        run: echo ${{ steps.artifact-upload.outputs.artifact-id }}
-      - run: |
-           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -Lv https://api.github.com/repos/baobao1270/vigilant-winner/actions/artifacts/${{ steps.artifact-upload.outputs.artifact-id }}/zip
+      - name: Run ID = ${{ github.run_id }}
+      - name: Artifact ID = ${{ steps.artifact-upload.outputs.artifact-id }}
+      - name: Download Artifact
+        run: |
+           curl -Lv \
+               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -o artifact.zip \
+               https://api.github.com/repos/baobao1270/vigilant-winner/actions/artifacts/${{ steps.artifact-upload.outputs.artifact-id }}/zip
+      - run: unzip artifact.zip
