@@ -1,0 +1,31 @@
+name: CI
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: run ${{ github.run_id }}
+        run: |
+          mkdir dist
+          uuidgen > dist/v1
+          uuidgen > dist/v2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+  start:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: run ${{ github.run_id }}
+        run: |
+          ls -al dist
