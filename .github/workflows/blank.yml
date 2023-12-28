@@ -3,6 +3,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  actions: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,5 +23,5 @@ jobs:
           path: dist
       - name: Output artifact ID ${{ steps.artifact-upload.outputs.artifact-id }}
         run: echo ${{ steps.artifact-upload.outputs.artifact-id }}
-      - run:
-           curl -Lv https://api.github.com/repos/baobao1270/vigilant-winner/actions/artifacts/${{ steps.artifact-upload.outputs.artifact-id }}/zip
+      - run: |
+           curl -H "Authorization: token $GITHUB_TOKEN" -Lv https://api.github.com/repos/baobao1270/vigilant-winner/actions/artifacts/${{ steps.artifact-upload.outputs.artifact-id }}/zip
