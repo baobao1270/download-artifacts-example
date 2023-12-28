@@ -24,4 +24,4 @@ jobs:
       - name: Output artifact ID ${{ steps.artifact-upload.outputs.artifact-id }}
         run: echo ${{ steps.artifact-upload.outputs.artifact-id }}
       - run: |
-           curl -H "Authorization: token $GITHUB_TOKEN" -Lv https://api.github.com/repos/baobao1270/vigilant-winner/actions/artifacts/${{ steps.artifact-upload.outputs.artifact-id }}/zip
+           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -Lv https://api.github.com/repos/baobao1270/vigilant-winner/actions/artifacts/${{ steps.artifact-upload.outputs.artifact-id }}/zip
