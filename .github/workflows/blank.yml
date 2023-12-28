@@ -17,15 +17,5 @@ jobs:
         with:
           name: dist
           path: dist
-  start:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: dist
-      - name: run ${{ github.run_id }}
-        run: |
-          ls -al dist
+      - name: Output artifact ID
+        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
