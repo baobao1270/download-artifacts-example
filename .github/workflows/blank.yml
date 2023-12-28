@@ -14,8 +14,9 @@ jobs:
           uuidgen > dist/v1
           uuidgen > dist/v2
       - uses: actions/upload-artifact@v4
+        id: artifact-upload
         with:
           name: dist
           path: dist
-      - name: Output artifact ID
-        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
+      - name: Output artifact ID ${{ steps.artifact-upload.outputs.artifact-id }}
+        run: echo ${{ steps.artifact-upload.outputs.artifact-id }}
