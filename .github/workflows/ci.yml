@@ -20,7 +20,9 @@ jobs:
           name: dist
           path: dist
       - name: Run ID = ${{ github.run_id }}
+        run: echo "Run ID = ${{ github.run_id }}"
       - name: Artifact ID = ${{ steps.artifact-upload.outputs.artifact-id }}
+        run: echo "Artifact ID = ${{ steps.artifact-upload.outputs.artifact-id }}"
       - name: Download Artifact
         run: |
            curl -Lv \
